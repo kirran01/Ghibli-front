@@ -3,9 +3,12 @@ import MenuIcon from '@mui/icons-material/Menu';
 import NavModal from './navModal';
 import Modal from 'react-modal';
 import { useState } from 'react';
+import { AuthContext } from '../context/auth.context';
+import { useContext } from 'react';
 
 
 const Nav = () => {
+    const { user, isLoggedIn, logOut } = useContext(AuthContext);
     const [modalIsOpen, setIsOpen] = useState(false);
     const customStyles = {
         content: {
@@ -26,9 +29,12 @@ const Nav = () => {
     }
     return (
         <nav className='bg-cyan-900'>
-            <ul className='p-5 flex'>
+            <ul className='p-5 flex justify-between'>
                 <li onClick={openModal} className='md:invisible lg:invisible'>
                     <MenuIcon sx={{ color: 'white' }} />
+                </li>
+                <li onClick={logOut} className='md:invisible lg:invisible text-white'>
+                    Log Out
                 </li>
             </ul>
             <Modal

@@ -23,7 +23,6 @@ const Signup = () => {
                     <input onChange={handleSignupInput} value={signupInput.signupPassword} name="signupPassword" type="text" className='border-gray border-2 rounded-md' />
                     <button className='bg-cyan-800 p-2 m-5 text-white rounded-md'>Create Account</button>
                 </form>
-
             </div>
         </div>
     );
