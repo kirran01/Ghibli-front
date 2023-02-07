@@ -1,12 +1,13 @@
 import React from 'react';
 
-const Preview = () => {
+const Preview = ({ film }) => {
+    console.log(film, 'f')
     return (
         <div>
-            <p>English name</p>
-            <p>Japanese name</p>
+            <p>{film.title}</p>
+            <p>{film.original_title}</p>
             <div>
-                <img src="" alt="film" />
+                <img src={film.image} alt="film" />
             </div>
         </div>
     );
