@@ -1,7 +1,6 @@
 import React from 'react';
 
 const Preview = ({ film }) => {
-    console.log(film, 'f')
     return (
         <div>
             <p>{film.title}</p>
