@@ -2,8 +2,10 @@ import React from 'react';
 import { useState, useContext } from 'react';
 import axios from 'axios';
 import { AuthContext } from '../context/auth.context';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Login = () => {
+    const navigate = useNavigate();
     const { storeToken, authenticateUser } = useContext(AuthContext)
     const [loginInput, setLoginInput] = useState({
         loginPassword: '',
@@ -22,6 +24,7 @@ const Login = () => {
                 console.log(res.data, 'rd')
                 storeToken(res.data.authToken)
                 authenticateUser()
+                navigate('/')
             })
             .catch(err => {
                 console.log(err, 'errlogin')

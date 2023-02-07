@@ -31,9 +31,9 @@ const Nav = () => {
         <nav className='bg-cyan-900'>
             <ul className='p-5 flex justify-between'>
                 <li onClick={openModal} className='md:invisible lg:invisible'>
-                    <MenuIcon sx={{ color: 'white' }} />
+                    <MenuIcon className='cursor-pointer' sx={{ color: 'white' }} />
                 </li>
-                <li onClick={logOut} className='md:invisible lg:invisible text-white'>
+                <li onClick={logOut} className='md:invisible lg:invisible text-white cursor-pointer'>
                     Log Out
                 </li>
             </ul>

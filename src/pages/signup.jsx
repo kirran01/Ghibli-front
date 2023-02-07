@@ -1,7 +1,10 @@
 import React from 'react';
 import { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 const Signup = () => {
+    const navigate = useNavigate();
     const [signupInput, setSignupInput] = useState({
         signupEmail: '',
         signupPassword: '',
@@ -9,6 +12,21 @@ const Signup = () => {
     })
     const handleSignupInput = (e) => {
         setSignupInput({ ...signupInput, [e.target.name]: e.target.value })
+    }
+    const signup = (e) => {
+        e.preventDefault()
+        axios.post('http://localhost:3000/auth/signup', {
+            email: signupInput.signupEmail,
+            password: signupInput.signupPassword,
+            username: signupInput.signupName,
+        })
+            .then(res => {
+                console.log(res.data)
+                navigate('/login')
+            })
+            .catch(err => {
+                console.log(err, 'signuperr')
+            })
     }
     return (
         <div className='h-screen flex justify-center content-center items-center bg-cyan-50'>
@@ -21,7 +39,7 @@ const Signup = () => {
                     <input onChange={handleSignupInput} value={signupInput.signupName} name="signupName" type="text" className='border-gray border-2 rounded-md' />
                     <label>Password</label>
                     <input onChange={handleSignupInput} value={signupInput.signupPassword} name="signupPassword" type="text" className='border-gray border-2 rounded-md' />
-                    <button className='bg-cyan-800 p-2 m-5 text-white rounded-md'>Create Account</button>
+                    <button onClick={signup} className='bg-cyan-800 p-2 m-5 text-white rounded-md'>Create Account</button>
                 </form>
             </div>
         </div>
