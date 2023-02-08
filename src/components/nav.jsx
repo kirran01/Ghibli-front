@@ -5,7 +5,7 @@ import Modal from 'react-modal';
 import { useState } from 'react';
 import { AuthContext } from '../context/auth.context';
 import { useContext } from 'react';
-
+import { useNavigate } from "react-router-dom";
 
 const Nav = () => {
     const { user, isLoggedIn, logOut } = useContext(AuthContext);

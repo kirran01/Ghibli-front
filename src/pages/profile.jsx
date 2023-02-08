@@ -14,7 +14,6 @@ const Profile = () => {
     const [userEditInput, setUserEditInput] = useState('')
     const navigate = useNavigate();
     const { storeToken, user, setUser, authenticateUser, logOut } = useContext(AuthContext)
-    console.log(user, 'u')
     const updateUser = (e) => {
         e.preventDefault()
         axios.put('http://localhost:3000/auth/edit-user', {
@@ -36,6 +35,10 @@ const Profile = () => {
                 console.log(err)
             })
     }
+    const deleteUser = (e) => {
+        e.preventDefault()
+        console.log('deleteUser')
+    }
     return (
         <div className='bg-cyan-50 flex flex-col items-center'>
             {user && user.profileImage ?
@@ -47,7 +50,7 @@ const Profile = () => {
             {extendEdit === '' && <button className='p-2 bg-cyan-300 m-2 rounded-lg text-white hover:bg-cyan-200' onClick={() => { setExtendEdit('open') }}>Edit Profile</button>}
             {extendEdit === 'open' &&
                 <div className='flex'>
-                    <button className='p-2 bg-red-400 m-2 rounded-lg text-white hover:bg-cyan-200' variant="outlined">Delete</button>
+                    <button className='p-2 bg-red-400 m-2 rounded-lg text-white hover:bg-red-500' variant="outlined" onClick={deleteUser}>Delete</button>
                     <button className='p-2 bg-cyan-300 m-2 rounded-lg text-white hover:bg-cyan-200' onClick={() => {
                         setExtendEdit('open-input')
                         setFieldToEdit('profileImage')

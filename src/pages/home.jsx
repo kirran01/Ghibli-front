@@ -2,6 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import { useState, useEffect } from 'react';
 import Preview from '../components/preview';
+import { Link } from 'react-router-dom';
 
 const Home = () => {
     const [films, setFilms] = useState([])
@@ -24,7 +25,9 @@ const Home = () => {
             {reqStatus === '' && <h1>Loading...</h1>}
             {reqStatus === 'success' && films.map(film => {
                 return (<>
-                    <Preview key={film.id} film={film} />
+                    <Link to={'/film/' + film.id}>
+                        <Preview key={film.id} film={film} />
+                    </Link>
                 </>)
             })}
             {reqStatus === 'error' && <h1>Uh oh! Something has gone wrong :(</h1>}
