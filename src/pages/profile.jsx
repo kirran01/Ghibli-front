@@ -14,6 +14,7 @@ const Profile = () => {
     const [userEditInput, setUserEditInput] = useState('')
     const navigate = useNavigate();
     const { storeToken, user, setUser, authenticateUser, logOut } = useContext(AuthContext)
+    console.log(user, 'u')
     const updateUser = (e) => {
         e.preventDefault()
         axios.put('http://localhost:3000/auth/edit-user', {
@@ -37,8 +38,11 @@ const Profile = () => {
     }
     return (
         <div className='bg-cyan-50 flex flex-col items-center'>
-            {/* <AccountCircleIcon sx={{ fontSize: 120 }} /> */}
-            <img className='w-16 h-16 rounded-full m-5' src="https://images.pexels.com/photos/15465414/pexels-photo-15465414.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="profilepic" />
+            {user && user.profileImage ?
+                <img className='w-16 h-16 rounded-full m-5' src={user.profileImage} alt="profilepic" />
+                :
+                <AccountCircleIcon sx={{ fontSize: 80 }} />
+            }
             {user && <p className='text-2xl m-2'>@{user.username}</p>}
             {extendEdit === '' && <button className='p-2 bg-cyan-300 m-2 rounded-lg text-white hover:bg-cyan-200' onClick={() => { setExtendEdit('open') }}>Edit Profile</button>}
             {extendEdit === 'open' &&
