@@ -12,6 +12,7 @@ const Profile = () => {
     const [extendEdit, setExtendEdit] = useState('')
     const [fieldToEdit, setFieldToEdit] = useState('')
     const [userEditInput, setUserEditInput] = useState('')
+    const [favorites, setFavorites] = useState([])
     const navigate = useNavigate();
     const { storeToken, user, setUser, authenticateUser, logOut } = useContext(AuthContext)
     const updateUser = (e) => {
@@ -39,6 +40,15 @@ const Profile = () => {
         e.preventDefault()
         console.log('deleteUser')
     }
+    useEffect(() => {
+        axios.get('http://localhost:3000/favorites/get-favorites')
+            .then(res => {
+                console.log(res.data, 'rdfavs')
+            })
+            .catch(err => {
+                console.log(err)
+            })
+    })
     return (
         <div className='bg-cyan-50 flex flex-col items-center'>
             {user && user.profileImage ?
@@ -80,6 +90,9 @@ const Profile = () => {
                     </div>
                 </form>
             }
+            <div>
+                <p className='underline'>Favorites</p>
+            </div>
         </div>
     );
 }

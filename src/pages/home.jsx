@@ -26,7 +26,7 @@ const Home = () => {
             {reqStatus === 'success' && films.map(film => {
                 return (<>
                     <Link to={'/film/' + film.id}>
-                        <Preview key={film.id} film={film} />
+                        <Preview film={film} />
                     </Link>
                 </>)
             })}
