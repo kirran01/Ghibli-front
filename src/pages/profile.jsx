@@ -3,6 +3,7 @@ import { AuthContext } from '../context/auth.context';
 import { useState, useContext, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
 import axios from 'axios';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import Button from '@mui/material/Button';
 import ClearIcon from '@mui/icons-material/Clear';
 
@@ -11,8 +12,6 @@ const Profile = () => {
     const [extendEdit, setExtendEdit] = useState('')
     const [fieldToEdit, setFieldToEdit] = useState('')
     const [userEditInput, setUserEditInput] = useState('')
-    console.log(userEditInput, 'uei')
-    console.log(fieldToEdit, 'fte')
     const navigate = useNavigate();
     const { storeToken, user, setUser, authenticateUser, logOut } = useContext(AuthContext)
     const updateUser = (e) => {
@@ -27,6 +26,10 @@ const Profile = () => {
             })
             .then(res => {
                 console.log(res.data)
+                setUser(res.data.updatedUser)
+                setExtendEdit('')
+                setUserEditInput('')
+                setFieldToEdit('')
             })
             .catch(err => {
                 console.log(err)
@@ -34,6 +37,7 @@ const Profile = () => {
     }
     return (
         <div className='bg-cyan-50 flex flex-col items-center'>
+            {/* <AccountCircleIcon sx={{ fontSize: 120 }} /> */}
             <img className='w-16 h-16 rounded-full m-5' src="https://images.pexels.com/photos/15465414/pexels-photo-15465414.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="profilepic" />
             {user && <p className='text-2xl m-2'>@{user.username}</p>}
             {extendEdit === '' && <button className='p-2 bg-cyan-300 m-2 rounded-lg text-white hover:bg-cyan-200' onClick={() => { setExtendEdit('open') }}>Edit Profile</button>}
