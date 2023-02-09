@@ -53,9 +53,9 @@ const Filmpage = () => {
     const addComment = (e) => {
         e.preventDefault()
         axios.post('http://localhost:3000/comments/create-comment', {
-            comment:commentInput,
-            postId:id
-        },{
+            comment: commentInput,
+            postId: id
+        }, {
             headers: {
                 authorization: `Bearer ${localStorage.getItem('authToken')}`
             }
