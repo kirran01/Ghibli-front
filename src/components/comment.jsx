@@ -12,7 +12,17 @@ const Comment = ({ comment }) => {
     }
     const deleteComment = (e) => {
         e.preventDefault()
-        console.log('deletecomment')
+        axios.delete(`http://localhost:3000/comments/delete-comment/${comment._id}`, {
+            headers: {
+                authorization: `Bearer ${localStorage.getItem('authToken')}`
+            }
+        })
+            .then(res => {
+                console.log(res.data)
+            })
+            .catch(err => {
+                console.log(err)
+            })
     }
     return (
         <div className='bg-white m-3 p-5 border-2 text-sm rounded-lg w-96'>
@@ -31,8 +41,8 @@ const Comment = ({ comment }) => {
             <div className='flex justify-between items-center'>
                 <p className=''>{new Date(comment.day).toDateString().substring(3)}</p>
                 <div>
-                    <button className='mx-2 p-1 bg-slate-200 rounded-md'>Edit</button>
-                    <button className='mx-2 p-1 bg-slate-200 rounded-md'>Delete</button>
+                    <button className='mx-2 p-1 bg-slate-200 rounded-md' onClick={editComment}>Edit</button>
+                    <button className='mx-2 p-1 bg-slate-200 rounded-md' onClick={deleteComment}>Delete</button>
                 </div>
             </div>
             {/* new Date(post.comments[0].day).toDateString().substring(3) */}
