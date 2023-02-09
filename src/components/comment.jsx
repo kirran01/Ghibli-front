@@ -53,7 +53,7 @@ const Comment = ({ comment, comments, setComments }) => {
                 }
             </div>
             <div className=''>
-                {openEdit && comment&& comments ? <>
+                {openEdit && comment && comments && <>
                     <div className='flex items-center'>
                         <form className='flex my-5' value={editInput} onSubmit={editComment}>
                             <input value={editInput} onChange={(e) => { setEditInput(e.target.value) }} type="text" placeholder='New comment' />
@@ -62,12 +62,11 @@ const Comment = ({ comment, comments, setComments }) => {
                         <button className='mx-2 p-1 bg-slate-200 rounded-md' onClick={() => { setOpenEdit(false) }}>Cancel</button>
                     </div>
                 </>
-                    :
-                    <p className='my-2'>{comment.comment}</p>
                 }
+                {!openEdit && comment && comments && <p className='my-2'>{comment.comment}</p>}
             </div>
             <div className='flex justify-between items-center'>
-                <p className='text-xs'>{new Date(comment.day).toDateString().substring(3)}</p>
+                {comment && <p className='text-xs'>{new Date(comment.day).toDateString().substring(3)}</p>}
                 <div>
                     {!openEdit && <button className='mx-2 p-1 bg-slate-200 rounded-md' onClick={() => { setOpenEdit(true) }}>Edit</button>}
                     {!openEdit && <button className='mx-2 p-1 bg-slate-200 rounded-md' onClick={deleteComment}>Delete</button>}

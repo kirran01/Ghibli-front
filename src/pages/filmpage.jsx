@@ -11,10 +11,12 @@ const Filmpage = () => {
     const [film, setFilm] = useState({})
     const [comments, setComments] = useState([])
     const [commentInput, setCommentInput] = useState('')
+    const [reqStatus, setReqStatus] = useState('')
     useEffect(() => {
         axios.get(`https://ghibliapibase.fly.dev/films/${id}`)
             .then(res => {
-                console.log(res.data, 'film')
+                console.log(res.data)
+                setReqStatus('success')
                 setFilm(res.data)
             })
             .catch(err => {
@@ -24,7 +26,7 @@ const Filmpage = () => {
     useEffect(() => {
         axios.get('http://localhost:3000/comments/all-comments')
             .then(res => {
-                console.log(res.data, 'rdcomments')
+                console.log(res.data)
                 setComments(res.data)
             })
             .catch(err => {
@@ -33,7 +35,7 @@ const Filmpage = () => {
     }, [])
     const addToFavs = (e) => {
         e.preventDefault()
-        axios.post('http://localhost:3000/favorites/create-favorite', {
+        axios.post(`http://localhost:3000/favorites/create-favorite/${film.id}`, {
             image: film.image,
             title: film.title,
             original_title: film.original_title,
@@ -47,7 +49,7 @@ const Filmpage = () => {
                 console.log(res.data, 'addedtofavs')
             })
             .catch(err => {
-                console.log(err)
+                console.log(err, 'err')
             })
     }
     const addComment = (e) => {
@@ -62,6 +64,7 @@ const Filmpage = () => {
         })
             .then(res => {
                 console.log(res.data)
+                setComments([...comments, res.data])
             })
             .catch(err => {
                 console.log(err)
@@ -72,7 +75,8 @@ const Filmpage = () => {
             <div className='flex flex-col items-center p-2'>
                 <p className='text-2xl m-1 text-center'>{film.title}({film.release_date})</p>
                 <p className='text-xl m-1'>{film.original_title}</p>
-                <img className='w-96 rounded-lg m-2 border-4 border-white' src={film.movie_banner} alt="banner" />
+                {reqStatus === 'success' && <img className='w-96 rounded-lg m-2 border-4 border-white' src={film.movie_banner} alt="banner" />}
+                {reqStatus === '' && <p>Loading...</p>}
             </div>
             <div className='text-center p-2'>
                 <div className='m-5'>

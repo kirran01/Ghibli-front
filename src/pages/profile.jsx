@@ -2,19 +2,23 @@ import React from 'react';
 import { AuthContext } from '../context/auth.context';
 import { useState, useContext, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import Button from '@mui/material/Button';
 import ClearIcon from '@mui/icons-material/Clear';
+import Preview from '../components/preview';
 
 
 const Profile = () => {
     const [extendEdit, setExtendEdit] = useState('')
     const [fieldToEdit, setFieldToEdit] = useState('')
     const [userEditInput, setUserEditInput] = useState('')
+    const [reqStatus, setReqStatus] = useState('')
     const [favorites, setFavorites] = useState([])
     const navigate = useNavigate();
     const { storeToken, user, setUser, authenticateUser, logOut } = useContext(AuthContext)
+    console.log(user, 'u')
     const updateUser = (e) => {
         e.preventDefault()
         axios.put('http://localhost:3000/auth/edit-user', {
@@ -43,12 +47,15 @@ const Profile = () => {
     useEffect(() => {
         axios.get('http://localhost:3000/favorites/get-favorites')
             .then(res => {
-                console.log(res.data, 'rdfavs')
+                console.log(res.data, 'rd')
+                const filteredFavs = res.data.filter(film => film.owner === user._id)
+                setReqStatus('success')
+                setFavorites(filteredFavs)
             })
             .catch(err => {
                 console.log(err)
             })
-    })
+    }, [])
     return (
         <div className='bg-cyan-50 flex flex-col items-center'>
             {user && user.profileImage ?
@@ -90,8 +97,16 @@ const Profile = () => {
                     </div>
                 </form>
             }
-            <div>
-                <p className='underline'>Favorites</p>
+            <div className='flex flex-col items-center'>
+                <p className='underline m-3'>Favorites</p>
+                {reqStatus === 'success' && favorites.map(film => {
+                    return (
+                        <Link to={'/film/' + film.id}>
+                            <Preview film={film} />
+                        </Link>
+                    )
+                })}
+                {reqStatus === '' && <p>Loading...</p>}
             </div>
         </div>
     );

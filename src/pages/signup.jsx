@@ -25,7 +25,7 @@ const Signup = () => {
                 navigate('/login')
             })
             .catch(err => {
-                console.log(err, 'signuperr')
+                console.log(err)
             })
     }
     return (
