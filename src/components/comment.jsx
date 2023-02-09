@@ -4,15 +4,38 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
-const Comment = () => {
+const Comment = ({ comment }) => {
+    console.log(comment, 'c')
+    const editComment = (e) => {
+        e.preventDefault()
+        console.log('editcomment')
+    }
+    const deleteComment = (e) => {
+        e.preventDefault()
+        console.log('deletecomment')
+    }
     return (
-        <div className='bg-white m-3 p-5 border-2 text-sm rounded-lg'>
+        <div className='bg-white m-3 p-5 border-2 text-sm rounded-lg w-96'>
             <div className='flex items-center'>
-                <p className='m-2'>Username</p>
-                <AccountCircleIcon />
+                <p className=''>{comment.owner.username}</p>
+                {comment.owner.profileImage ?
+                    <img className='w-6 h-6 rounded-full m-2' src={comment.owner.profileImage} alt="img" />
+                    :
+                    <AccountCircleIcon />
+                }
             </div>
-            <p className='m-2'>Photo booth williamsburg before they sold out pop-up raw denim. Banjo fam kale chips master cleanse tumblr JOMO. Tote bag kogi succulents poutine, semiotics bitters thundercats organic tilde normcore biodiesel occupy.</p>
-            <p className='m-2'>date</p>
+            <div className=''>
+                <p className='my-2'>{comment.comment}</p>
+            </div>
+
+            <div className='flex justify-between items-center'>
+                <p className=''>{new Date(comment.day).toDateString().substring(3)}</p>
+                <div>
+                    <button className='mx-2 p-1 bg-slate-200 rounded-md'>Edit</button>
+                    <button className='mx-2 p-1 bg-slate-200 rounded-md'>Delete</button>
+                </div>
+            </div>
+            {/* new Date(post.comments[0].day).toDateString().substring(3) */}
         </div>
     );
 }
