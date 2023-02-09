@@ -116,7 +116,7 @@ const Filmpage = () => {
                 <div>
                     {comments.map(comment => {
                         return (
-                            <Comment comment={comment} />
+                            <Comment comment={comment} comments={comments} setComments={setComments} />
                         )
                     })}
                 </div>

@@ -4,11 +4,29 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
-const Comment = ({ comment }) => {
-    console.log(comment, 'c')
+const Comment = ({ comment, comments, setComments }) => {
+    const [editInput, setEditInput] = useState('')
+    const [openEdit, setOpenEdit] = useState(false)
     const editComment = (e) => {
         e.preventDefault()
-        console.log('editcomment')
+        axios.put(`http://localhost:3000/comments/edit-comment/${comment._id}`, {
+            comment: editInput
+        }, {
+            headers: {
+                authorization: `Bearer ${localStorage.getItem('authToken')}`
+            }
+        })
+            .then(res => {
+                setOpenEdit(false)
+                let updatedComment = comments.map(oneComment => {
+                    oneComment._id === comment._id ? { ...comments, comment: res.data.comment } : oneComment
+                })
+                setComments(updatedComment)
+                console.log(res.data, 'rdcomm')
+            })
+            .catch(err => {
+                console.log(err)
+            })
     }
     const deleteComment = (e) => {
         e.preventDefault()
@@ -27,25 +45,34 @@ const Comment = ({ comment }) => {
     return (
         <div className='bg-white m-3 p-5 border-2 text-sm rounded-lg w-96'>
             <div className='flex items-center'>
-                <p className=''>{comment.owner.username}</p>
-                {comment.owner.profileImage ?
+                {comments && comment && <p className=''>{comment.owner.username}</p>}
+                {comments && comment && comment.owner.profileImage ?
                     <img className='w-6 h-6 rounded-full m-2' src={comment.owner.profileImage} alt="img" />
                     :
                     <AccountCircleIcon />
                 }
             </div>
             <div className=''>
-                <p className='my-2'>{comment.comment}</p>
+                {openEdit && comment&& comments ? <>
+                    <div className='flex items-center'>
+                        <form className='flex my-5' value={editInput} onSubmit={editComment}>
+                            <input value={editInput} onChange={(e) => { setEditInput(e.target.value) }} type="text" placeholder='New comment' />
+                            <button className='mx-2 p-1 bg-slate-200 rounded-md'>Submit</button>
+                        </form>
+                        <button className='mx-2 p-1 bg-slate-200 rounded-md' onClick={() => { setOpenEdit(false) }}>Cancel</button>
+                    </div>
+                </>
+                    :
+                    <p className='my-2'>{comment.comment}</p>
+                }
             </div>
-
             <div className='flex justify-between items-center'>
-                <p className=''>{new Date(comment.day).toDateString().substring(3)}</p>
+                <p className='text-xs'>{new Date(comment.day).toDateString().substring(3)}</p>
                 <div>
-                    <button className='mx-2 p-1 bg-slate-200 rounded-md' onClick={editComment}>Edit</button>
-                    <button className='mx-2 p-1 bg-slate-200 rounded-md' onClick={deleteComment}>Delete</button>
+                    {!openEdit && <button className='mx-2 p-1 bg-slate-200 rounded-md' onClick={() => { setOpenEdit(true) }}>Edit</button>}
+                    {!openEdit && <button className='mx-2 p-1 bg-slate-200 rounded-md' onClick={deleteComment}>Delete</button>}
                 </div>
             </div>
-            {/* new Date(post.comments[0].day).toDateString().substring(3) */}
         </div>
     );
 }
