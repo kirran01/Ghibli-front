@@ -10,7 +10,6 @@ const Home = () => {
     useEffect(() => {
         axios.get('https://ghibliapibase.fly.dev/films')
             .then(res => {
-                console.log(res.data, 'rd')
                 setFilms(res.data)
                 setReqStatus('success')
             })

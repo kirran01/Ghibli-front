@@ -21,7 +21,6 @@ const Login = () => {
             password: loginInput.loginPassword
         })
             .then(res => {
-                console.log(res.data, 'rd')
                 storeToken(res.data.authToken)
                 authenticateUser()
                 navigate('/')

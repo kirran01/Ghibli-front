@@ -18,7 +18,6 @@ const Profile = () => {
     const [favorites, setFavorites] = useState([])
     const navigate = useNavigate();
     const { storeToken, user, setUser, authenticateUser, logOut } = useContext(AuthContext)
-    console.log(user, 'u')
     const updateUser = (e) => {
         e.preventDefault()
         axios.put('http://localhost:3000/auth/edit-user', {
@@ -47,7 +46,6 @@ const Profile = () => {
     useEffect(() => {
         axios.get('http://localhost:3000/favorites/get-favorites')
             .then(res => {
-                console.log(res.data, 'rd')
                 const filteredFavs = res.data.filter(film => film.owner === user._id)
                 setReqStatus('success')
                 setFavorites(filteredFavs)

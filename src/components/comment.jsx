@@ -8,8 +8,6 @@ import { CommentsDisabled } from '@mui/icons-material';
 const Comment = ({ comment, comments, setComments }) => {
     const [editInput, setEditInput] = useState('')
     const [openEdit, setOpenEdit] = useState(false)
-    console.log(comment, 'c')
-    console.log(comments, 'cs')
     const editComment = (e) => {
         e.preventDefault()
         axios.put(`http://localhost:3000/comments/edit-comment/${comment._id}`, {

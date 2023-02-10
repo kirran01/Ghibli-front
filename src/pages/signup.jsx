@@ -21,7 +21,6 @@ const Signup = () => {
             username: signupInput.signupName,
         })
             .then(res => {
-                console.log(res.data)
                 navigate('/login')
             })
             .catch(err => {

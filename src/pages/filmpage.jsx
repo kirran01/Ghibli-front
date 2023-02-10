@@ -12,10 +12,10 @@ const Filmpage = () => {
     const [comments, setComments] = useState([])
     const [commentInput, setCommentInput] = useState('')
     const [reqStatus, setReqStatus] = useState('')
+
     useEffect(() => {
         axios.get(`https://ghibliapibase.fly.dev/films/${id}`)
             .then(res => {
-                console.log(res.data)
                 setReqStatus('success')
                 setFilm(res.data)
             })
@@ -26,8 +26,9 @@ const Filmpage = () => {
     useEffect(() => {
         axios.get('http://localhost:3000/comments/all-comments')
             .then(res => {
-                console.log(res.data)
-                setComments(res.data)
+                let allComments = res.data
+                let filteredComments = allComments.filter(oneComment => oneComment.postId === film.id)
+                setComments(filteredComments)
             })
             .catch(err => {
                 console.log(err)
@@ -64,7 +65,7 @@ const Filmpage = () => {
         })
             .then(res => {
                 console.log(res.data, 'addcomment')
-                let newComment=res.data
+                let newComment = res.data
                 setComments([...comments, newComment])
                 setCommentInput('')
             })
@@ -75,7 +76,7 @@ const Filmpage = () => {
     return (
         <div className='bg-cyan-50 flex flex-col items-center'>
             <div className='flex flex-col items-center p-2'>
-                <p className='text-2xl m-1 text-center'>{film.title}({film.release_date})</p>
+                {reqStatus === 'success' && <p className='text-2xl m-1 text-center'>{film.title}({film.release_date})</p>}
                 <p className='text-xl m-1'>{film.original_title}</p>
                 {reqStatus === 'success' && <img className='w-96 rounded-lg m-2 border-4 border-white' src={film.movie_banner} alt="banner" />}
                 {reqStatus === '' && <p>Loading...</p>}
