@@ -63,8 +63,10 @@ const Filmpage = () => {
             }
         })
             .then(res => {
-                console.log(res.data)
-                setComments([...comments, res.data])
+                console.log(res.data, 'addcomment')
+                let newComment=res.data
+                setComments([...comments, newComment])
+                setCommentInput('')
             })
             .catch(err => {
                 console.log(err)
@@ -105,7 +107,7 @@ const Filmpage = () => {
                 <p className='my-4 underline'>Discussion</p>
                 <div>
                     <form className='flex flex-col items-center' action="">
-                        <input value={commentInput} className='border-2 rounded' type="text" placeholder='Comment' onChange={(e) => { setCommentInput(e.target.value) }} />
+                        <input value={commentInput} className='border-2 rounded' type="text" placeholder='Add a comment!' onChange={(e) => { setCommentInput(e.target.value) }} />
                         <div className='flex items-center m-2'>
                             <button className='bg-cyan-400 hover:bg-cyan-300 rounded-md p-2 m-2' type="" onClick={addComment}>Submit</button>
                             <button className='p-2 bg-slate-200 hover:bg-slate-100 rounded-md m-2' onClick={(e) => {

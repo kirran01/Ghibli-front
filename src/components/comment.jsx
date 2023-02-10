@@ -3,10 +3,13 @@ import { useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import { CommentsDisabled } from '@mui/icons-material';
 
 const Comment = ({ comment, comments, setComments }) => {
     const [editInput, setEditInput] = useState('')
     const [openEdit, setOpenEdit] = useState(false)
+    console.log(comment, 'c')
+    console.log(comments, 'cs')
     const editComment = (e) => {
         e.preventDefault()
         axios.put(`http://localhost:3000/comments/edit-comment/${comment._id}`, {
@@ -18,8 +21,9 @@ const Comment = ({ comment, comments, setComments }) => {
         })
             .then(res => {
                 setOpenEdit(false)
+                let theComment = res.data
                 let updatedComment = comments.map(oneComment => {
-                    oneComment._id === comment._id ? { ...comments, comment: res.data.comment } : oneComment
+                    return oneComment._id === comment._id ? { ...oneComment, ...theComment } : oneComment
                 })
                 setComments(updatedComment)
                 console.log(res.data, 'rdcomm')
@@ -36,7 +40,8 @@ const Comment = ({ comment, comments, setComments }) => {
             }
         })
             .then(res => {
-                console.log(res.data)
+                let filteredForDelete = comments.filter(oneComment => oneComment._id !== comment._id)
+                setComments(filteredForDelete)
             })
             .catch(err => {
                 console.log(err)
