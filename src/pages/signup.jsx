@@ -28,7 +28,7 @@ const Signup = () => {
             })
     }
     return (
-        <div className='h-screen flex justify-center content-center items-center bg-cyan-50'>
+        <div className='h-screen flex flex-col justify-center content-center items-center bg-cyan-50'>
             <div className='bg-white flex flex-col justify-center items-center rounded-md drop-shadow-md'>
                 <h1 className='m-5'>Sign up</h1>
                 <form className='m-5 flex flex-col items-center '>
@@ -41,6 +41,9 @@ const Signup = () => {
                     <button onClick={signup} className='bg-cyan-800 p-2 m-5 text-white rounded-md'>Create Account</button>
                 </form>
             </div>
+            <footer className='my-10'>
+                <p>Studio Ghibli Archive by Kirran Kirpalani</p>
+            </footer>
         </div>
     );
 }

@@ -99,7 +99,7 @@ const Profile = () => {
                 <p className='underline m-3'>Favorites</p>
                 {reqStatus === 'success' && favorites.map(film => {
                     return (
-                        <Link to={'/film/' + film.id}>
+                        <Link to={'/film/' + film.showId}>
                             <Preview film={film} />
                         </Link>
                     )

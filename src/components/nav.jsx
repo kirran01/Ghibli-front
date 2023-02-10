@@ -40,7 +40,7 @@ const Nav = () => {
                     <li className='lg:hidden md:hidden'>
                         <MenuIcon onClick={openModal} className='cursor-pointer' sx={{ color: 'white' }} />
                     </li>
-                    <Link className='text-white cursor-pointer hidden lg:list-item md:list-item'>
+                    <Link className='text-white cursor-pointer hidden lg:list-item md:list-item' to={'/profile'}>
                         Profile
                     </Link>
                 </div>
