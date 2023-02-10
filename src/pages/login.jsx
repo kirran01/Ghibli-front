@@ -30,9 +30,9 @@ const Login = () => {
             })
     }
     return (
-        <div className='h-screen flex justify-center content-center items-center bg-cyan-50'>
-            <div className='bg-white flex flex-col justify-center items-center rounded-md drop-shadow-md'>
-                <h1 className='m-5'>Log In</h1>
+        <div className='h-screen flex flex-col justify-center content-center items-center bg-cyan-50'>
+            <div className='bg-white flex flex-col justify-center items-center rounded-lg drop-shadow-lg'>
+                <p className='m-5 text-lg'>Log In</p>
                 <form className='m-5 flex flex-col items-center '>
                     <label>Username</label>
                     <input onChange={handleLoginInput} value={loginInput.signupName} name="loginName" type="text" className='border-gray border-2 rounded-md' />
@@ -41,6 +41,9 @@ const Login = () => {
                     <button onClick={login} className='bg-cyan-800 p-2 m-5 text-white rounded-md'>Log In</button>
                 </form>
             </div>
+            <footer className='my-10'>
+                <p>Studio Ghibli Archive by Kirran Kirpalani</p>
+            </footer>
         </div>
     );
 }

@@ -40,9 +40,9 @@ const Nav = () => {
                     <li className='lg:hidden md:hidden'>
                         <MenuIcon onClick={openModal} className='cursor-pointer' sx={{ color: 'white' }} />
                     </li>
-                    <li className='text-white cursor-pointer hidden lg:list-item md:list-item'>
+                    <Link className='text-white cursor-pointer hidden lg:list-item md:list-item'>
                         Profile
-                    </li>
+                    </Link>
                 </div>
                 <li onClick={logOut} className='text-white cursor-pointer'>
                     Log Out
@@ -58,12 +58,12 @@ const Nav = () => {
                     </li>
                     </div>
                     <div className='flex'>
-                    <li className='text-white cursor-pointer hidden lg:list-item md:list-item mx-2'>
+                    <Link className='text-white cursor-pointer hidden lg:list-item md:list-item mx-2' to={'/login'}>
                        Login
-                    </li>
-                    <li className='text-white cursor-pointer hidden lg:list-item md:list-item mx-2'>
+                    </Link>
+                    <Link className='text-white cursor-pointer hidden lg:list-item md:list-item mx-2' to={'/signup'}>
                        Sign Up
-                    </li>
+                    </Link>
                     </div>
             </ul>}
 
