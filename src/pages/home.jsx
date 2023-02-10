@@ -19,17 +19,21 @@ const Home = () => {
             })
     }, [])
     return (
-        <div className='bg-cyan-50 flex flex-col items-center'>
-            <h1 className='text-2xl m-5'>Studio Ghibli Archive</h1>
-            {reqStatus === '' && <h1>Loading...</h1>}
-            {reqStatus === 'success' && films.map(film => {
-                return (<>
-                    <Link to={'/film/' + film.id}>
-                        <Preview film={film} />
-                    </Link>
-                </>)
-            })}
-            {reqStatus === 'error' && <h1>Uh oh! Something has gone wrong :(</h1>}
+        <div className='bg-cyan-50'>
+            <h1 className='text-2xl mb-5 pt-2 text-center'>Studio Ghibli Archive</h1>
+            <div className='bg-cyan-50'>
+                {reqStatus === '' && <h1>Loading...</h1>}
+                <div className='flex flex-col items-center justify-center content-center lg:flex-row lg:flex-wrap md:flex-row md:flex-wrap'>
+                {reqStatus === 'success' && films.map(film => {
+                    return (<>
+                        <Link to={'/film/' + film.id}>
+                            <Preview film={film} />
+                        </Link>
+                    </>)
+                })}
+                </div>
+                {reqStatus === 'error' && <h1>Uh oh! Something has gone wrong :(</h1>}
+            </div>
         </div>
     );
 }
