@@ -40,10 +40,7 @@ const Filmpage = () => {
         axios.get('http://localhost:3000/comments/all-comments')
             .then(res => {
                 let allComments = res.data
-                console.log(film,'film')
-                let filteredComments = allComments.filter(oneComment => oneComment.postId === film.id)
-                console.log(allComments, 'ac')
-                console.log(filteredComments, 'fc')
+                let filteredComments = allComments.filter(oneComment => oneComment.postId === id)
                 setComments(filteredComments)
             })
             .catch(err => {
@@ -51,15 +48,14 @@ const Filmpage = () => {
             })
     }, [])
     const isFavorited = () => {
-        const obj = favorites.find(favorite => favorite.owner === user._id && favorite.showId === film.id)
+        const obj = favorites.find(favorite => favorite.owner._id === user._id && favorite.showId === film.id)
         if (obj) {
             return true
         } else {
             return false
         }
     }
-    const addToFavs = (e) => {
-        e.preventDefault()
+    const addToFavs = () => {
         axios.post(`http://localhost:3000/favorites/create-favorite/${film.id}`, {
             image: film.image,
             title: film.title,
@@ -72,6 +68,7 @@ const Filmpage = () => {
         })
             .then(res => {
                 console.log(res.data)
+                setFavorites([...favorites, res.data])
             })
             .catch(err => {
                 console.log(err)

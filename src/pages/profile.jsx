@@ -44,16 +44,18 @@ const Profile = () => {
         console.log('deleteUser')
     }
     useEffect(() => {
-        axios.get('http://localhost:3000/favorites/get-favorites')
+        if (user) {
+            axios.get('http://localhost:3000/favorites/get-favorites')
             .then(res => {
-                const filteredFavs = res.data.filter(film => film.owner === user._id)
+                const filteredFavs = res.data.filter(film => film.owner._id === user._id)
                 setReqStatus('success')
                 setFavorites(filteredFavs)
             })
             .catch(err => {
                 console.log(err)
             })
-    }, [])
+        }
+    }, [user])
     return (
         <div className='bg-cyan-50 flex flex-col items-center'>
             {user && user.profileImage ?
