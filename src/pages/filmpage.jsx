@@ -40,7 +40,10 @@ const Filmpage = () => {
         axios.get('http://localhost:3000/comments/all-comments')
             .then(res => {
                 let allComments = res.data
+                console.log(film,'film')
                 let filteredComments = allComments.filter(oneComment => oneComment.postId === film.id)
+                console.log(allComments, 'ac')
+                console.log(filteredComments, 'fc')
                 setComments(filteredComments)
             })
             .catch(err => {
@@ -104,7 +107,17 @@ const Filmpage = () => {
     }
     const deleteFav = (e) => {
         e.preventDefault()
-        console.log('delete fav')
+        axios.delete(`http://localhost:3000/favorites/delete-favorite/${id}`, {
+            headers: {
+                authorization: `Bearer ${localStorage.getItem('authToken')}`
+            }
+        })
+            .then(res => {
+                console.log('deleted')
+            })
+            .catch(err => {
+                console.log(err,)
+            })
     }
     return (
         <div className='bg-cyan-50 flex flex-col items-center'>
