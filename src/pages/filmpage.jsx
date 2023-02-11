@@ -119,8 +119,8 @@ const Filmpage = () => {
     return (
         <div className='bg-cyan-50 flex flex-col items-center'>
             <div className='flex flex-col items-center p-2'>
-                {reqStatus === 'success' && <p className='text-2xl lg:text-3xl m-1 text-center'>{film.title}({film.release_date})</p>}
-                <p className='text-xl m-1 lg:text-2xl'>{film.original_title}</p>
+                {reqStatus === 'success' && <p className='text-2xl lg:text-3xl mt-5 mb-3 text-center'>{film.title}({film.release_date})</p>}
+                <p className='text-xl m-2 lg:text-2xl'>{film.original_title}</p>
                 {reqStatus === 'success' && <img className='w-96 lg:w-1/2 md:w-1/2 rounded-lg m-2 border-4 border-white' src={film.movie_banner} alt="banner" />}
                 {reqStatus === '' && <p>Loading...</p>}
             </div>

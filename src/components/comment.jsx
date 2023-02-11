@@ -1,13 +1,17 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
+import { AuthContext } from '../context/auth.context';
 import axios from 'axios';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { CommentsDisabled } from '@mui/icons-material';
 
 const Comment = ({ comment, comments, setComments }) => {
+    const { user, isLoggedIn, logOut } = useContext(AuthContext);
     const [editInput, setEditInput] = useState('')
     const [openEdit, setOpenEdit] = useState(false)
+    console.log(comment, 'c')
+    console.log(user, 'u')
     const editComment = (e) => {
         e.preventDefault()
         axios.put(`http://localhost:3000/comments/edit-comment/${comment._id}`, {
@@ -45,6 +49,14 @@ const Comment = ({ comment, comments, setComments }) => {
                 console.log(err)
             })
     }
+    const isUsersComment = () => {
+        const userCheck = comment.owner._id === user._id
+        if (userCheck) {
+            return true
+        } else {
+            return false
+        }
+    }
     return (
         <div className='bg-white m-3 p-5 border-2 text-sm rounded-lg w-96'>
             <div className='flex items-center'>
@@ -71,8 +83,8 @@ const Comment = ({ comment, comments, setComments }) => {
             <div className='flex justify-between items-center'>
                 {comment && <p className='text-xs'>{new Date(comment.day).toDateString().substring(3)}</p>}
                 <div>
-                    {!openEdit && <button className='mx-2 p-1 bg-slate-200 rounded-md' onClick={() => { setOpenEdit(true) }}>Edit</button>}
-                    {!openEdit && <button className='mx-2 p-1 bg-slate-200 rounded-md' onClick={deleteComment}>Delete</button>}
+                    {!openEdit && isUsersComment()&& <button className='mx-2 p-1 bg-slate-200 rounded-md' onClick={() => { setOpenEdit(true) }}>Edit</button>}
+                    {!openEdit && isUsersComment()&& <button className='mx-2 p-1 bg-slate-200 rounded-md' onClick={deleteComment}>Delete</button>}
                 </div>
             </div>
         </div>
