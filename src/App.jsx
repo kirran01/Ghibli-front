@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { Route, Routes } from 'react-router-dom'
+import Otheruser from './pages/otheruser'
 import Home from './pages/home'
 import Profile from './pages/profile'
 import Signup from './pages/signup'
@@ -19,6 +20,7 @@ function App() {
         <Route path='/login' element={<Login />} />
         <Route path='/profile' element={<Profile />} />
         <Route path='/film/:id' element={<Filmpage />} />
+        <Route path='/user/:userId' element={<Otheruser />} />
       </Routes>
     </div>
   )

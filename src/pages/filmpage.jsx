@@ -5,6 +5,7 @@ import { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import Comment from '../components/comment';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import { accordionSummaryClasses } from '@mui/material';
 
 
 const Filmpage = () => {
@@ -67,7 +68,7 @@ const Filmpage = () => {
             }
         })
             .then(res => {
-                console.log(res.data)
+                console.log(favorites, 'favadded')
                 setFavorites([...favorites, res.data])
             })
             .catch(err => {
@@ -102,19 +103,20 @@ const Filmpage = () => {
                 }, 1500)
             })
     }
-    const deleteFav = (e) => {
+    const deleteFav2 = async (e) => {
         e.preventDefault()
-        axios.delete(`http://localhost:3000/favorites/delete-favorite/${id}`, {
-            headers: {
-                authorization: `Bearer ${localStorage.getItem('authToken')}`
-            }
-        })
-            .then(res => {
-                console.log('deleted')
+        try {
+            const deletedObj = await axios.delete(`http://localhost:3000/favorites/delete-favorite/${id}`, {
+                headers: {
+                    authorization: `Bearer ${localStorage.getItem('authToken')}`
+                }
             })
-            .catch(err => {
-                console.log(err,)
-            })
+            console.log(favorites, 'favdeleted')
+            const filteredDeletedFavs = favorites.filter(oneFavorite => oneFavorite.owner._id !== user._id && oneFavorite.showId !== id)
+            setFavorites(filteredDeletedFavs)
+        } catch (err) {
+            console.log(err)
+        }
     }
     return (
         <div className='bg-cyan-50 flex flex-col items-center'>
@@ -143,7 +145,7 @@ const Filmpage = () => {
                 </div>
             </div>
             {user && !favoriteError && !isFavorited() && <button onClick={addToFavs} className='bg-cyan-400 hover:bg-cyan-300 rounded-md p-2'>Favorite</button>}
-            {user && !favoriteError && isFavorited() && <button onClick={deleteFav} className='bg-cyan-700 hover:bg-cyan-600 rounded-md p-2 text-white'>Favorited</button>}
+            {user && !favoriteError && isFavorited() && <button onClick={deleteFav2} className='bg-cyan-700 hover:bg-cyan-600 rounded-md p-2 text-white'>Favorited</button>}
             {favoriteError && <p>Log in to favorite</p>}
             <div className='flex flex-col items-center'>
                 <p className='lg:text-lg my-4 underline'>Discussion</p>
