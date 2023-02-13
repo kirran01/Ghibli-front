@@ -103,7 +103,7 @@ const Filmpage = () => {
                 }, 1500)
             })
     }
-    const deleteFav2 = async (e) => {
+    const deleteFav = async (e) => {
         e.preventDefault()
         try {
             const deletedObj = await axios.delete(`http://localhost:3000/favorites/delete-favorite/${id}`, {
@@ -111,7 +111,6 @@ const Filmpage = () => {
                     authorization: `Bearer ${localStorage.getItem('authToken')}`
                 }
             })
-            console.log(favorites, 'favdeleted')
             const filteredDeletedFavs = favorites.filter(oneFavorite => oneFavorite.owner._id !== user._id && oneFavorite.showId !== id)
             setFavorites(filteredDeletedFavs)
         } catch (err) {
@@ -145,7 +144,7 @@ const Filmpage = () => {
                 </div>
             </div>
             {user && !favoriteError && !isFavorited() && <button onClick={addToFavs} className='bg-cyan-400 hover:bg-cyan-300 rounded-md p-2'>Favorite</button>}
-            {user && !favoriteError && isFavorited() && <button onClick={deleteFav2} className='bg-cyan-700 hover:bg-cyan-600 rounded-md p-2 text-white'>Favorited</button>}
+            {user && !favoriteError && isFavorited() && <button onClick={deleteFav} className='bg-cyan-700 hover:bg-cyan-600 rounded-md p-2 text-white'>Favorited</button>}
             {favoriteError && <p>Log in to favorite</p>}
             <div className='flex flex-col items-center'>
                 <p className='lg:text-lg my-4 underline'>Discussion</p>
@@ -164,7 +163,6 @@ const Filmpage = () => {
                         </div>
                     </form>
                 </div>
-
                 <div>
                     {comments.map(comment => {
                         return (

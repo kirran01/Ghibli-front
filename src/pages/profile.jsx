@@ -2,6 +2,7 @@ import React from 'react';
 import { AuthContext } from '../context/auth.context';
 import { useState, useContext, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
+import Comment from '../components/comment';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
@@ -11,13 +12,16 @@ import Preview from '../components/preview';
 
 
 const Profile = () => {
+    const [showing, setShowing] = useState('favorites')
     const [extendEdit, setExtendEdit] = useState('')
     const [fieldToEdit, setFieldToEdit] = useState('')
     const [userEditInput, setUserEditInput] = useState('')
     const [reqStatus, setReqStatus] = useState('')
     const [favorites, setFavorites] = useState([])
+    const [userComments, setUserComments] = useState([])
     const navigate = useNavigate();
     const { storeToken, user, setUser, authenticateUser, logOut } = useContext(AuthContext)
+    console.log(user,'u')
     const updateUser = (e) => {
         e.preventDefault()
         axios.put('http://localhost:3000/auth/edit-user', {
@@ -46,14 +50,31 @@ const Profile = () => {
     useEffect(() => {
         if (user) {
             axios.get('http://localhost:3000/favorites/get-favorites')
-            .then(res => {
-                const filteredFavs = res.data.filter(film => film.owner._id === user._id)
-                setReqStatus('success')
-                setFavorites(filteredFavs)
-            })
-            .catch(err => {
-                console.log(err)
-            })
+                .then(res => {
+                    const filteredFavs = res.data.filter(film => film.owner._id === user._id)
+                    setReqStatus('success')
+                    setFavorites(filteredFavs)
+                })
+                .catch(err => {
+                    console.log(err)
+                })
+        }
+    }, [user])
+    useEffect(() => {
+        if (user) {
+            const fetchComments = async () => {
+                try {
+                    const res = await axios.get('http://localhost:3000/comments/all-comments')
+                    let allComments = res.data
+                    let filteredComments = allComments.filter(oneComment => oneComment.owner._id === user._id)
+                    setUserComments(filteredComments)
+                    
+                    console.log(filteredComments,'fc')
+                } catch (err) {
+                    console.log(err)
+                }
+            }
+            fetchComments()
         }
     }, [user])
     return (
@@ -97,8 +118,11 @@ const Profile = () => {
                     </div>
                 </form>
             }
-            <div className='flex flex-col items-center'>
-                <p className='underline m-3'>Favorites</p>
+            <div>
+                <button onClick={() => { setShowing('favorites') }} className='underline m-3'>Favorites</button>
+                <button onClick={() => { setShowing('comments') }} className='underline m-3'>Comments</button>
+            </div>
+            {showing === 'favorites' && <div className='flex flex-col flex-wrap lg:flex-row md:flex-row justify-center items-center'>
                 {reqStatus === 'success' && favorites.map(film => {
                     return (
                         <Link to={'/film/' + film.showId}>
@@ -107,7 +131,17 @@ const Profile = () => {
                     )
                 })}
                 {reqStatus === '' && <p>Loading...</p>}
+            </div>}
+            <div>
+                {userComments.map(comment => {
+                    return (
+                        <Comment comment={comment} />
+                    )
+                })}
             </div>
+            <footer className='m-5'>
+                Ghibli Archive By Kirran Kirpalani
+            </footer>
         </div>
     );
 }
