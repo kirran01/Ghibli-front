@@ -9,6 +9,7 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import Button from '@mui/material/Button';
 import ClearIcon from '@mui/icons-material/Clear';
 import Preview from '../components/preview';
+import Modal from 'react-modal';
 
 
 const Profile = () => {
@@ -19,9 +20,27 @@ const Profile = () => {
     const [reqStatus, setReqStatus] = useState('')
     const [favorites, setFavorites] = useState([])
     const [userComments, setUserComments] = useState([])
+    const [deleteInput, setDeleteInput] = useState('')
     const navigate = useNavigate();
     const { storeToken, user, setUser, authenticateUser, logOut } = useContext(AuthContext)
-    console.log(user,'u')
+    const [modalIsOpen, setIsOpen] = useState(false);
+    const customStyles = {
+        content: {
+            borderRadius: '10px',
+            top: '50%',
+            left: '50%',
+            right: 'auto',
+            bottom: 'auto',
+            marginRight: '-50%',
+            transform: 'translate(-50%, -50%)',
+        },
+    };
+    function openModal() {
+        setIsOpen(true);
+    }
+    function closeModal() {
+        setIsOpen(false);
+    }
     const updateUser = (e) => {
         e.preventDefault()
         axios.put('http://localhost:3000/auth/edit-user', {
@@ -43,10 +62,6 @@ const Profile = () => {
                 console.log(err)
             })
     }
-    const deleteUser = (e) => {
-        e.preventDefault()
-        console.log('deleteUser')
-    }
     useEffect(() => {
         if (user) {
             axios.get('http://localhost:3000/favorites/get-favorites')
@@ -67,9 +82,8 @@ const Profile = () => {
                     const res = await axios.get('http://localhost:3000/comments/all-comments')
                     let allComments = res.data
                     let filteredComments = allComments.filter(oneComment => oneComment.owner._id === user._id)
+                    console.log(filteredComments, 'fc')
                     setUserComments(filteredComments)
-                    
-                    console.log(filteredComments,'fc')
                 } catch (err) {
                     console.log(err)
                 }
@@ -77,6 +91,20 @@ const Profile = () => {
             fetchComments()
         }
     }, [user])
+    const deleteUser = async () => {
+        try {
+            const res = await axios.delete(`http://localhost:3000/auth/delete-user/${user._id}`, {
+                headers: {
+                    authorization: `Bearer ${localStorage.getItem('authToken')}`
+                }
+            })
+            console.log(res.data)
+            logOut()
+            navigate('/')
+        } catch (err) {
+            console.log(err)
+        }
+    }
     return (
         <div className='bg-cyan-50 flex flex-col items-center'>
             {user && user.profileImage ?
@@ -88,7 +116,7 @@ const Profile = () => {
             {extendEdit === '' && <button className='p-2 bg-cyan-300 m-2 rounded-lg text-white hover:bg-cyan-200' onClick={() => { setExtendEdit('open') }}>Edit Profile</button>}
             {extendEdit === 'open' &&
                 <div className='flex'>
-                    <button className='p-2 bg-red-400 m-2 rounded-lg text-white hover:bg-red-500' variant="outlined" onClick={deleteUser}>Delete</button>
+                    <button className='p-2 bg-red-400 m-2 rounded-lg text-white hover:bg-red-500' variant="outlined" onClick={openModal}>Delete</button>
                     <button className='p-2 bg-cyan-300 m-2 rounded-lg text-white hover:bg-cyan-200' onClick={() => {
                         setExtendEdit('open-input')
                         setFieldToEdit('profileImage')
@@ -133,7 +161,7 @@ const Profile = () => {
                 {reqStatus === '' && <p>Loading...</p>}
             </div>}
             <div>
-                {userComments.map(comment => {
+                {showing === 'comments' && userComments.map(comment => {
                     return (
                         <Comment comment={comment} />
                     )
@@ -142,6 +170,19 @@ const Profile = () => {
             <footer className='m-5'>
                 Ghibli Archive By Kirran Kirpalani
             </footer>
+            <Modal
+                isOpen={modalIsOpen}
+                onRequestClose={closeModal}
+                style={customStyles}
+            >
+                <div className='flex flex-col items-center'>
+                    <p className='m-5'>Are you sure you want to delete your account?</p>
+                    <div>
+                        <button onClick={deleteUser} className='p-2 bg-red-400 m-2 rounded-lg text-white hover:bg-red-500'>Confirm</button>
+                        <button onClick={closeModal} className='p-2 bg-slate-100 m-2 rounded-lg hover:bg-slate-50'>Cancel</button>
+                    </div>
+                </div>
+            </Modal>
         </div>
     );
 }

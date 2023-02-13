@@ -42,6 +42,7 @@ const Filmpage = () => {
             .then(res => {
                 let allComments = res.data
                 let filteredComments = allComments.filter(oneComment => oneComment.postId === id)
+                console.log(filteredComments,'fcf')
                 setComments(filteredComments)
             })
             .catch(err => {

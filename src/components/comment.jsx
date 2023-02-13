@@ -58,7 +58,7 @@ const Comment = ({ comment, comments, setComments }) => {
     }
     return (
         <div className='bg-white m-3 p-5 border-2 text-sm rounded-lg w-96'>
-            <Link to={'/user/' + comment.owner._id}>
+            {<Link to={'/user/' + comment.owner._id}>
                 <div className='flex items-center'>
                     {comments && comment && <p className=''>{comment.owner.username}</p>}
                     {comments && comment && comment.owner.profileImage ?
@@ -67,7 +67,7 @@ const Comment = ({ comment, comments, setComments }) => {
                         <AccountCircleIcon />
                     }
                 </div>
-            </Link>
+            </Link>}
             <div className=''>
                 {openEdit && comment && comments && <>
                     <div className='flex items-center'>
