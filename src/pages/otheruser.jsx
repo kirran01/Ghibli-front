@@ -36,7 +36,7 @@ const Otheruser = () => {
         if (user) {
             const fetchComments = async () => {
                 try {
-                    const res = await axios.get(`${import.meta.env.VITE_API_URL} / comments / all - comments`)
+                    const res = await axios.get(`${import.meta.env.VITE_API_URL}/comments/all-comments`)
                     let allComments = res.data
                     let filteredComments = allComments.filter(oneComment => oneComment.owner._id === userId)
                     console.log(filteredComments, 'fc')
