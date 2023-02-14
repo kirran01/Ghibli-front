@@ -41,7 +41,7 @@ const Nav = () => {
                         <MenuIcon onClick={openModal} className='cursor-pointer' sx={{ color: 'white' }} />
                     </li>
                     <Link className='text-white cursor-pointer hidden lg:list-item md:list-item' to={'/profile'}>
-                        Profile
+                       Profile
                     </Link>
                 </div>
                 <li onClick={logOut} className='text-white cursor-pointer'>

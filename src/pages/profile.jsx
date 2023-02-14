@@ -108,7 +108,7 @@ const Profile = () => {
         }
     }
     return (
-        <div className='bg-cyan-50 flex flex-col items-center h-screen'>
+        <div className='bg-cyan-50 flex flex-col items-center h-full relative'>
             {user && user.profileImage ?
                 <img className='w-16 h-16 rounded-full m-5' src={user.profileImage} alt="profilepic" />
                 :
@@ -162,7 +162,7 @@ const Profile = () => {
                 })}
                 {reqStatus === '' && <p>Loading...</p>}
             </div>}
-            <div>
+            <div className='min-h-60'>
                 {showing === 'comments' && userComments.map(comment => {
                     return (
                         <Comment comment={comment} comments={userComments} setComments={setUserComments} />
@@ -182,9 +182,6 @@ const Profile = () => {
                     </div>
                 </div>
             </Modal>
-            <footer className='m-5'>
-                Ghibli Archive By Kirran Kirpalani
-            </footer>
         </div>
     );
 }

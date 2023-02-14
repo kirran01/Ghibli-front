@@ -34,16 +34,13 @@ const Login = () => {
             <div className='bg-white flex flex-col justify-center items-center rounded-lg drop-shadow-lg'>
                 <p className='m-5 text-lg'>Log In</p>
                 <form className='m-5 flex flex-col items-center '>
-                    <label>Username</label>
-                    <input onChange={handleLoginInput} value={loginInput.signupName} name="loginName" type="text" className='border-gray border-2 rounded-md' />
-                    <label>Password</label>
-                    <input onChange={handleLoginInput} value={loginInput.signupPassword} name="loginPassword" type="text" className='border-gray border-2 rounded-md' />
-                    <button onClick={login} className='bg-cyan-800 p-2 m-5 text-white rounded-md'>Log In</button>
+                    <label className='m-2'>Username</label>
+                    <input className='border-gray border-2 rounded-md m-2' onChange={handleLoginInput} value={loginInput.signupName} name="loginName" type="text" />
+                    <label className='m-2'>Password</label>
+                    <input className='border-gray border-2 rounded-md m-2' onChange={handleLoginInput} value={loginInput.signupPassword} name="loginPassword" type="password" />
+                    <button className='bg-cyan-800 p-2 m-5 text-white rounded-md' onClick={login} >Log In</button>
                 </form>
             </div>
-            <footer className='my-10'>
-                <p>Studio Ghibli Archive by Kirran Kirpalani</p>
-            </footer>
         </div>
     );
 }

@@ -58,7 +58,17 @@ const Comment = ({ comment, comments, setComments }) => {
     }
     return (
         <div className='bg-white m-3 p-5 border-2 text-sm rounded-lg w-96'>
-            {<Link to={'/user/' + comment.owner._id}>
+            {!isUsersComment()&&<Link to={'/user/' + comment.owner._id}>
+                <div className='flex items-center'>
+                    {comment && <p className=''>{comment.owner.username}</p>}
+                    {comment && comment.owner.profileImage ?
+                        <img className='w-6 h-6 rounded-full m-2' src={comment.owner.profileImage} alt="img" />
+                        :
+                        <AccountCircleIcon sx={{ margin: '0px 5px 0px' }} />
+                    }
+                </div>
+            </Link>}
+            {isUsersComment()&&<Link to={'/profile'}>
                 <div className='flex items-center'>
                     {comment && <p className=''>{comment.owner.username}</p>}
                     {comment && comment.owner.profileImage ?

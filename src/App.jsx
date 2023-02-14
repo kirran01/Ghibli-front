@@ -6,6 +6,7 @@ import Profile from './pages/profile'
 import Signup from './pages/signup'
 import Login from './pages/login'
 import Filmpage from './pages/filmpage'
+import Footer from './components/footer'
 import Nav from './components/nav'
 import './App.css'
 
@@ -21,6 +22,7 @@ function App() {
         <Route path='/film/:id' element={<Filmpage />} />
         <Route path='/user/:userId' element={<Otheruser />} />
       </Routes>
+      <Footer />
     </div>
   )
 }
