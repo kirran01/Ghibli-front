@@ -69,11 +69,10 @@ const Filmpage = () => {
             }
         })
             .then(res => {
-                console.log(favorites, 'favadded')
                 setFavorites([...favorites, res.data])
             })
             .catch(err => {
-                console.log(err)
+                console.log(err, 'favErr')
                 setFavoriteError(true)
                 setInterval(() => {
                     setFavoriteError(false)
@@ -146,7 +145,7 @@ const Filmpage = () => {
             </div>
             {user && !favoriteError && !isFavorited() && <button onClick={addToFavs} className='bg-cyan-400 hover:bg-cyan-300 rounded-md p-2'>Favorite</button>}
             {user && !favoriteError && isFavorited() && <button onClick={deleteFav} className='bg-cyan-700 hover:bg-cyan-600 rounded-md p-2 text-white'>Favorited</button>}
-            {favoriteError && <p>Log in to favorite</p>}
+            {favoriteError && <p>Something went wrong</p>}
             <div className='flex flex-col items-center'>
                 <p className='lg:text-lg my-4 underline'>Discussion</p>
                 <div>
