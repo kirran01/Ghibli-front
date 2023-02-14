@@ -13,7 +13,7 @@ function AuthProviderWrapper(props) {
         console.log('running')
         const storedToken = localStorage.getItem('authToken')
         if (storedToken) {
-            axios.get('http://localhost:3000/auth/verify', { headers: { Authorization: `Bearer ${storedToken}` } })
+            axios.get(`${import.meta.env.VITE_API_URL}/auth/verify`, { headers: { Authorization: `Bearer ${storedToken}` } })
                 .then(res => {
                     const user = res.data
                     setIsLoggedIn(true)

@@ -43,7 +43,7 @@ const Profile = () => {
     }
     const updateUser = (e) => {
         e.preventDefault()
-        axios.put('http://localhost:3000/auth/edit-user', {
+        axios.put(`${import.meta.env.VITE_API_URL}/auth/edit-user`, {
             [fieldToEdit]: userEditInput
         },
             {
@@ -64,8 +64,10 @@ const Profile = () => {
     }
     useEffect(() => {
         if (user) {
-            axios.get('http://localhost:3000/favorites/get-favorites')
+            axios.get(`${import.meta.env.VITE_API_URL}/favorites/get-favorites`)
                 .then(res => {
+                    console.log(res.data, 'rd')
+                    console.log(user, 'u')
                     const filteredFavs = res.data.filter(film => film.owner._id === user._id)
                     setReqStatus('success')
                     setFavorites(filteredFavs)
@@ -79,7 +81,7 @@ const Profile = () => {
         if (user) {
             const fetchComments = async () => {
                 try {
-                    const res = await axios.get('http://localhost:3000/comments/all-comments')
+                    const res = await axios.get(`${import.meta.env.VITE_API_URL}/comments/all-comments`)
                     let allComments = res.data
                     let filteredComments = allComments.filter(oneComment => oneComment.owner._id === user._id)
                     console.log(filteredComments, 'fc')
@@ -150,7 +152,7 @@ const Profile = () => {
                 <button onClick={() => { setShowing('favorites') }} className='underline m-3'>Favorites</button>
                 <button onClick={() => { setShowing('comments') }} className='underline m-3'>Comments</button>
             </div>
-            {showing === 'favorites' && <div className='flex flex-col flex-wrap lg:flex-row md:flex-row justify-center items-center'>
+            {user && showing === 'favorites' && <div className='flex flex-col flex-wrap lg:flex-row md:flex-row justify-center items-center'>
                 {reqStatus === 'success' && favorites.map(film => {
                     return (
                         <Link to={'/film/' + film.showId}>

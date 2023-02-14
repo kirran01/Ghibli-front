@@ -17,11 +17,11 @@ const Otheruser = () => {
     const [reqStatus, setReqStatus] = useState('')
     const [favorites, setFavorites] = useState([])
     const [userComments, setUserComments] = useState([])
-    const [user,setUser] = useState()
+    const [user, setUser] = useState()
     // const { storeToken, user, setUser, authenticateUser, logOut } = useContext(AuthContext)
     useEffect(() => {
         if (user) {
-            axios.get('http://localhost:3000/favorites/get-favorites')
+            axios.get(`${import.meta.env.VITE_API_URL}/favorites/get-favorites`)
                 .then(res => {
                     const filteredFavs = res.data.filter(film => film.owner._id === userId)
                     setReqStatus('success')
@@ -36,9 +36,10 @@ const Otheruser = () => {
         if (user) {
             const fetchComments = async () => {
                 try {
-                    const res = await axios.get('http://localhost:3000/comments/all-comments')
+                    const res = await axios.get(`${import.meta.env.VITE_API_URL} / comments / all - comments`)
                     let allComments = res.data
                     let filteredComments = allComments.filter(oneComment => oneComment.owner._id === userId)
+                    console.log(filteredComments, 'fc')
                     setUserComments(filteredComments)
                 } catch (err) {
                     console.log(err)
@@ -50,7 +51,7 @@ const Otheruser = () => {
     useEffect(() => {
         const getUserInfo = async () => {
             try {
-                const res = await axios.get(`http://localhost:3000/auth/get-another-user/${userId}`)
+                const res = await axios.get(`${import.meta.env.VITE_API_URL}/auth/get-another-user/${userId}`)
                 setUser(res.data)
             } catch (err) {
                 console.log(err)

@@ -19,7 +19,8 @@ const Filmpage = () => {
     const [commentError, setCommentError] = useState(false)
     const [favoriteError, setFavoriteError] = useState(false)
     useEffect(() => {
-        axios.get('http://localhost:3000/favorites/get-favorites')
+
+        axios.get(`${import.meta.env.VITE_API_URL}/favorites/get-favorites`)
             .then(res => {
                 setFavorites(res.data)
             })
@@ -38,11 +39,11 @@ const Filmpage = () => {
             })
     }, [])
     useEffect(() => {
-        axios.get('http://localhost:3000/comments/all-comments')
+        axios.get(`${import.meta.env.VITE_API_URL}/comments/all-comments`)
             .then(res => {
                 let allComments = res.data
                 let filteredComments = allComments.filter(oneComment => oneComment.postId === id)
-                console.log(filteredComments,'fcf')
+                console.log(filteredComments, 'fcf')
                 setComments(filteredComments)
             })
             .catch(err => {
@@ -82,7 +83,7 @@ const Filmpage = () => {
     }
     const addComment = (e) => {
         e.preventDefault()
-        axios.post('http://localhost:3000/comments/create-comment', {
+        axios.post(`${import.meta.env.VITE_API_URL}/comments/create-comment`, {
             comment: commentInput,
             postId: id
         }, {

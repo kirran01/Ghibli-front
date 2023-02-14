@@ -60,8 +60,8 @@ const Comment = ({ comment, comments, setComments }) => {
         <div className='bg-white m-3 p-5 border-2 text-sm rounded-lg w-96'>
             {<Link to={'/user/' + comment.owner._id}>
                 <div className='flex items-center'>
-                    {comments && comment && <p className=''>{comment.owner.username}</p>}
-                    {comments && comment && comment.owner.profileImage ?
+                    {comment && <p className=''>{comment.owner.username}</p>}
+                    {comment && comment.owner.profileImage ?
                         <img className='w-6 h-6 rounded-full m-2' src={comment.owner.profileImage} alt="img" />
                         :
                         <AccountCircleIcon />
@@ -69,7 +69,7 @@ const Comment = ({ comment, comments, setComments }) => {
                 </div>
             </Link>}
             <div className=''>
-                {openEdit && comment && comments && <>
+                {openEdit && comment && <>
                     <div className='flex items-center'>
                         <form className='flex my-5' value={editInput} onSubmit={editComment}>
                             <input value={editInput} onChange={(e) => { setEditInput(e.target.value) }} type="text" placeholder='New comment' />
@@ -79,7 +79,7 @@ const Comment = ({ comment, comments, setComments }) => {
                     </div>
                 </>
                 }
-                {!openEdit && comment && comments && <p className='my-2'>{comment.comment}</p>}
+                {!openEdit && comment && <p className='my-2'>{comment.comment}</p>}
             </div>
             <div className='flex justify-between items-center'>
                 {comment && <p className='text-xs'>{new Date(comment.day).toDateString().substring(3)}</p>}
