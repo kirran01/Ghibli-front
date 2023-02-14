@@ -84,8 +84,8 @@ const Comment = ({ comment, comments, setComments }) => {
             <div className='flex justify-between items-center'>
                 {comment && <p className='text-xs'>{new Date(comment.day).toDateString().substring(3)}</p>}
                 <div>
-                    {!openEdit && isUsersComment() && <button className='mx-2 p-1 bg-slate-200 rounded-md' onClick={() => { setOpenEdit(true) }}>Edit</button>}
-                    {!openEdit && isUsersComment() && <button className='mx-2 p-1 bg-slate-200 rounded-md' onClick={deleteComment}>Delete</button>}
+                    {isLoggedIn && !openEdit && isUsersComment() && <button className='mx-2 p-1 bg-slate-200 rounded-md' onClick={() => { setOpenEdit(true) }}>Edit</button>}
+                    {isLoggedIn && !openEdit && isUsersComment() && <button className='mx-2 p-1 bg-slate-200 rounded-md' onClick={deleteComment}>Delete</button>}
                 </div>
             </div>
         </div>
