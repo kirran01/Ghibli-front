@@ -13,7 +13,7 @@ import './App.css'
 
 function App() {
   const [films, setFilms] = useState([])
-  const[filteredFilms,setFilteredFilms]=useState([])
+  const [filteredFilms, setFilteredFilms] = useState([])
   const updateFilms = (updatedFilms) => {
     setFilteredFilms(updatedFilms)
   }
@@ -27,11 +27,27 @@ function App() {
         console.log(err, 'err')
       })
   }, [])
+  const [isFiltering, setIsFiltering] = useState('')
+  const sortByRuntime = () => {
+    const sortedFilms = [...filteredFilms].sort((a, b) => a.running_time - b.running_time);
+    setFilteredFilms(sortedFilms);
+    setFilms(sortedFilms)
+  };
+  const sortByRating = () => {
+    const sortedFilms = [...filteredFilms].sort((a, b) => b.rt_score - a.rt_score);
+    setFilteredFilms(sortedFilms);
+    setFilms(sortedFilms)
+  };
+  const sortByTitle = () => {
+    const sortedFilms = [...filteredFilms].sort((a, b) => a.release_date - b.release_date);
+    setFilteredFilms(sortedFilms);
+    setFilms(sortedFilms)
+  };
   return (
     <div className="App">
       <Nav />
       <Routes>
-        <Route path='/' element={<Home updateFilms={updateFilms} films={films} setFilms={setFilms} filteredFilms={filteredFilms} setFilteredFilms={setFilteredFilms}/>} />
+        <Route path='/' element={<Home isFiltering={isFiltering} setIsFiltering={setIsFiltering} sortByRating={sortByRating} sortByTitle={sortByTitle} sortByRuntime={sortByRuntime} updateFilms={updateFilms} films={films} setFilms={setFilms} filteredFilms={filteredFilms} setFilteredFilms={setFilteredFilms} />} />
         <Route path='/signup' element={<Signup />} />
         <Route path='/login' element={<Login />} />
         <Route path='/profile' element={<Profile />} />
