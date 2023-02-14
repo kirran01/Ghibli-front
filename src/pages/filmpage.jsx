@@ -125,22 +125,26 @@ const Filmpage = () => {
                 {reqStatus === 'success' && <img className='w-96 lg:w-1/2 md:w-1/2 rounded-lg m-2 border-4 border-white' src={film.movie_banner} alt="banner" />}
                 {reqStatus === '' && <p>Loading...</p>}
             </div>
+            <table class="table-auto text-left rounded m-5">
+                <tbody className=''>
+                    <tr class="bg-cyan-100">
+                        <td class="border border-cyan-200 px-4 py-2">Running Time:</td>
+                        <td class="border border-cyan-200 px-4 py-2">{film.running_time} mins</td>
+                    </tr>
+                    <tr class="bg-cyan-100">
+                        <td class="border border-cyan-200 px-4 py-2">RT Score:</td>
+                        <td class="border border-cyan-200 px-4 py-2">{film.rt_score}%</td>
+                    </tr>
+                    <tr class="bg-cyan-100">
+                        <td class="border border-cyan-200 px-4 py-2">Director:</td>
+                        <td class="border border-cyan-200 px-4 py-2">{film.director}</td>
+                    </tr>
+                </tbody>
+            </table>
             <div className='text-center p-2'>
                 <div className='m-5'>
                     <p className='lg:text-lg m-2 underline'>Plot</p>
                     <p className='text-sm md:px-10 lg:px-15'>{film.description}</p>
-                </div>
-                <div className='m-5'>
-                    <p className='lg:text-lg m-2 underline'>Running Time</p>
-                    <p className='text-sm'>{film.running_time} mins</p>
-                </div>
-                <div className='m-5'>
-                    <p className='lg:text-lg m-2 underline'>RT Score</p>
-                    <p className='text-sm'>{film.rt_score}%</p>
-                </div>
-                <div className='m-5'>
-                    <p className='lg:text-lg m-2 underline'>Director</p>
-                    <p className='text-sm'>{film.director}</p>
                 </div>
             </div>
             {user && !favoriteError && !isFavorited() && <button onClick={addToFavs} className='bg-cyan-400 hover:bg-cyan-300 rounded-md p-2'>Favorite</button>}
