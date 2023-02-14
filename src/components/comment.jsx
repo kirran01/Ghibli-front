@@ -64,7 +64,7 @@ const Comment = ({ comment, comments, setComments }) => {
                     {comment && comment.owner.profileImage ?
                         <img className='w-6 h-6 rounded-full m-2' src={comment.owner.profileImage} alt="img" />
                         :
-                        <AccountCircleIcon />
+                        <AccountCircleIcon sx={{ margin: '0px 5px 0px' }} />
                     }
                 </div>
             </Link>}

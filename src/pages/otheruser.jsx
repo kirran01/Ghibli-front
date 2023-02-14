@@ -60,11 +60,11 @@ const Otheruser = () => {
         getUserInfo()
     }, [])
     return (
-        <div className='bg-cyan-50 flex flex-col items-center'>
+        <div className='bg-cyan-50 flex flex-col items-center h-screen'>
             {user && user.profileImage ?
                 <img className='w-16 h-16 rounded-full m-5' src={user.profileImage} alt="profilepic" />
                 :
-                <AccountCircleIcon sx={{ fontSize: 80 }} />
+                <AccountCircleIcon sx={{ fontSize: 80, margin:'10px' }} />
             }
             {user && <p className='text-2xl m-2'>@{user.username}</p>}
             {extendEdit === 'open' &&
