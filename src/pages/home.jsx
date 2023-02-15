@@ -24,8 +24,8 @@ const Home = ({ films, sortByRuntime,isFiltering, setIsFiltering, sortByTitle, s
             <h1 className='text-2xl mb-5 pt-2 text-center'>Studio Ghibli Archive</h1>
             <Searchbar films={films} updateFilms={updateFilms} searchInput={searchInput} setSearchInput={setSearchInput} />
             <div>
-                <button className='p-2 bg-slate-50 rounded-md m-2' onClick={sortByRuntime}>Runtime</button>
-                <button className='p-2 bg-slate-50 rounded-md m-2' onClick={sortByRating}>Rating</button>
+                <button className='p-2 bg-slate-50 rounded-md m-2' onClick={sortByRuntime}>Shortest Runtime</button>
+                <button className='p-2 bg-slate-50 rounded-md m-2' onClick={sortByRating}>Highest Rating</button>
             </div>
             <div className='bg-cyan-50'>
                 <div className='flex flex-col items-center justify-center content-center lg:flex-row lg:flex-wrap md:flex-row md:flex-wrap'>
