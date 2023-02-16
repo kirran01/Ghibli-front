@@ -58,7 +58,7 @@ const Filmpage = () => {
         }
     }
     const addToFavs = () => {
-        axios.post(`http://localhost:3000/favorites/create-favorite/${film.id}`, {
+        axios.post(`${import.meta.env.VITE_API_URL}/favorites/create-favorite/${film.id}`, {
             image: film.image,
             title: film.title,
             original_title: film.original_title,
